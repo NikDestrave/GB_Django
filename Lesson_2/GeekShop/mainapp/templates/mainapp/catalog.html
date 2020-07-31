@@ -1,0 +1,33 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 style="text-align: center">Каталог</h1>
+    <div id="big_img">
+
+    </div>
+    <div class="pr">
+    {% for data in json_catalog %}
+        <div class="pr_1">
+            <img class="product" id="{{ data.id }}" src="{{ data.src }}" style="height: 500px;">
+            <span>{{ data.name }}</span
+            ><span>{{ data.price }}₽</span>
+            <input type="button" class="button_buy" value="Купить" id="{{ data.id_button }}">
+        </div>
+    {% endfor %}
+    </div>
+    <table id="shop_items" class="shop_items">
+        <tr>
+            <td colspan="4" style="font-size: 18px">Корзина</td>
+        </tr>
+        <tr>
+            <td>№</td>
+            <td>Товар</td>
+            <td>Количество</td>
+            <td>Стоимость за ед.</td>
+        </tr>
+    </table>
+    <div class="result">
+        Итоговая стоимость: <span id="result"></span><span style="font-weight: 600; font-size: 20px;"> &#8381;</span>
+    </div>
+{% endblock %}
