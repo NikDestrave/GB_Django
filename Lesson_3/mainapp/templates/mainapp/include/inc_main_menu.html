@@ -1,0 +1,12 @@
+<ul class="menu">
+    <li><a href="{% url 'main' %}">Главная</a></li>
+    <li><a href="{% url 'catalog' %}">Каталог</a>
+        <ul class="submenu">
+            <a class="submenu_items" href="{% url 'product_1' %}">Schecter Demon-7</a>
+            <a class="submenu_items" href="{% url 'product_2' %}">Schecter OMEN-8</a>
+            <a class="submenu_items" href="{% url 'product_3' %}">Schecter C-5 BASS SGR</a>
+        </ul>
+    </li>
+    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+    <li><a href="{% url 'games' %}">Игры</a></li>
+</ul>
