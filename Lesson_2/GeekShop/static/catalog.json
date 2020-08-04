@@ -1,0 +1,23 @@
+[
+  {
+    "id": "pr_1_0",
+    "src": "/static/img/DEMON_2.png",
+    "name": "Schecter Demon-7",
+    "price": "32000",
+    "id_button": "shop_item_0"
+  },
+  {
+    "id": "pr_1_1",
+    "src": "/static/img/OMEN-8_2.png",
+    "name": "Schecter OMEN-8",
+    "price": "24000",
+    "id_button": "shop_item_1"
+  },
+  {
+    "id": "pr_1_2",
+    "src": "/static/img/C-5%20SGR_2.png",
+    "name": "Schecter C-5 BASS SGR",
+    "price": "17000",
+    "id_button": "shop_item_2"
+  }
+]
