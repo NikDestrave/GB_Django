@@ -142,39 +142,17 @@ def category_delete(request, pk):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def products(request, pk=None, page=1):
+def products(request, pk):
     title = 'продукты'
-    links_menu = CatalogCategory.objects.filter(is_active=True)
-    basket = get_basket(request.user)
+    category_item = get_object_or_404(CatalogCategory, pk=pk)
+    products_list = Product.objects.filter(category__pk=pk)
 
-    if pk is not None:
-        if pk == 0:
-            category = {
-                'pk': 0,
-                'name': 'все'
-            }
-            product = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
-        else:
-            category = get_object_or_404(CatalogCategory, pk=pk)
-            product = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price')
+    content = {
+        'title': title,
+        'objects': category_item
+    }
 
-        paginator = Paginator(product, 2)
-        try:
-            products_paginator = paginator.page(page)
-        except PageNotAnInteger:
-            products_paginator = paginator.page(1)
-        except EmptyPage:
-            products_paginator = paginator.page(paginator.num_pages)
-
-        content = {
-            'title': title,
-            'links_menu': links_menu,
-            'category': category,
-            'products': products_paginator,
-            'basket': basket,
-        }
-
-        return render(request, 'mainapp/products_list.html', content)
+    return render(request, 'adminapp/products.html', content)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -185,7 +163,7 @@ def product_create(request, pk):
         product_form = ShopUserRegisterForm(request.POST, request.FILES)
         if product_form.is_valid():
             product_form.save()
-            return HttpResponseRedirect(reverse('admin:products'))
+            return HttpResponseRedirect(reverse('admin:products', args=[pk]))
     else:
         product_form = ShopUserRegisterForm()
 
