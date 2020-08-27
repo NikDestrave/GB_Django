@@ -8,9 +8,25 @@
     </div>
     <div>
         <h2>
-          Категория: "{{ category.name|title }}"
+            Категория: "{{ category.name|title }}"
         </h2>
-      </div>
+    </div>
+    <div class="paginator">
+        {% if products.has_previous %}
+            <a href="{% url 'catalog:page' category.pk product.previous_page_number %}">
+                <
+            </a>
+        {% endif %}
+        <span class="current">
+            страница {{ products.number }} из
+            {{ products.paginator.num_pages }}
+          </span>
+        {% if products.has_next %}
+            <a href="{% url 'catalog:page' category.pk product.next_page_number %}">
+                >
+            </a>
+        {% endif %}
+    </div>
     <div class="pr">
         {% for product in products %}
             <div class="pr_1">
@@ -22,5 +38,4 @@
             </div>
         {% endfor %}
     </div>
-
 {% endblock %}

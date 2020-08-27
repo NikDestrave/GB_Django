@@ -1,14 +1,14 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from authapp.forms import ShopUserRegisterForm
 from authapp.models import ShopUser
 from django.shortcuts import get_object_or_404, render
 from mainapp.models import Product, CatalogCategory
-from mainapp.views import get_basket
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -149,7 +149,8 @@ def products(request, pk):
 
     content = {
         'title': title,
-        'objects': category_item
+        'objects': products_list,
+        'category': category_item
     }
 
     return render(request, 'adminapp/products.html', content)
@@ -238,3 +239,50 @@ def product_delete(request, pk):
     content = {'title': title, 'product_to_delete': product}
 
     return render(request, 'adminapp/product_delete.html', content)
+
+
+class UsersListView(ListView):
+    model = ShopUser
+    template_name = 'adminapp/users.html'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+class ProductCategoryCreateView(CreateView):
+    model = CatalogCategory
+    template_name = 'adminapp/category_update.html'
+    success_url = reverse_lazy('admin:categories')
+    fields = '__all__'
+
+
+class ProductCategoryUpdateView(UpdateView):
+    model = CatalogCategory
+    template_name = 'adminapp/category_update.html'
+    success_url = reverse_lazy('admin:categories')
+    fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'категории/редактирование'
+
+        return context
+
+
+class ProductCategoryDeleteView(DeleteView):
+    model = CatalogCategory
+    template_name = 'adminapp/category_delete.html'
+    success_url = reverse_lazy('admin:categories')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_active = False
+        self.object.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'adminapp/product_read.html'
