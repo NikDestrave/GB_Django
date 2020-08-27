@@ -3,13 +3,6 @@
 
 {% block content %}
     <h1 style="text-align: center">Каталог</h1>
-    <div class="details-products">
-        <div class="details-slider">
-            <div class="slider-product">
-                <img src="/media/{{ hot_product.src }}" alt="">
-            </div>
-        </div>
-    </div>
     <div style="text-align: center">
         {% include 'mainapp/include/inc_category_menu.html' %}
     </div>
@@ -18,6 +11,22 @@
             Категория: "{{ category.name|title }}"
         </h2>
     </div>
+    <div class="paginator">
+        {% if products.has_previous %}
+            <a href="{% url 'products:page' category.pk products.previous_page_number %}">
+                <
+            </a>
+        {% endif %}
+        <span class="current">
+            страница {{ products.number }} из
+            {{ products.paginator.num_pages }}
+          </span>
+        {% if products.has_next %}
+            <a href="{% url 'products:page' category.pk products.next_page_number %}">
+                >
+            </a>
+        {% endif %}
+    </div>
     <div class="pr">
         {% for product in products %}
             <div class="pr_1">
@@ -25,9 +34,7 @@
                      style="height: 500px;">
                 <span>{{ product.name }}</span>
                 <span>{{ product.price }} ₽</span>
-                <a href="{% url 'basket:add' product.pk %}">
-                    Купить
-                </a>
+                <input type="button" class="button_buy" value="Купить" id="shop_item_{{ product.id_button }}">
             </div>
         {% endfor %}
     </div>

@@ -96,7 +96,7 @@ def product(request, pk):
     content = {
         'title': title,
         'links_menu': CatalogCategory.objects.all(),
-        'product': Product,
+        'product': get_object_or_404(Product, pk=pk),
         'basket': get_basket(request.user),
     }
 
