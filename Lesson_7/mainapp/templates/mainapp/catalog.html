@@ -13,7 +13,7 @@
     </div>
     <div class="paginator">
         {% if products.has_previous %}
-            <a href="{% url 'products:page' category.pk products.previous_page_number %}">
+            <a href="{% url 'catalog:page' category.pk products.previous_page_number %}">
                 <
             </a>
         {% endif %}
@@ -22,7 +22,7 @@
             {{ products.paginator.num_pages }}
           </span>
         {% if products.has_next %}
-            <a href="{% url 'products:page' category.pk products.next_page_number %}">
+            <a href="{% url 'catalog:page' category.pk products.next_page_number %}">
                 >
             </a>
         {% endif %}
