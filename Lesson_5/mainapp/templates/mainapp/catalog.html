@@ -1,0 +1,28 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 style="text-align: center">Каталог</h1>
+    <div style="text-align: center">
+        {% include 'mainapp/include/inc_category_menu.html' %}
+    </div>
+    <div>
+        <h2>
+            Категория: "{{ category.name|title }}"
+        </h2>
+    </div>
+    <div class="pr">
+        {% for product in products %}
+            <div class="pr_1">
+                <img class="product" id="pr_1_{{ product.id_class }}" src="/media/{{ product.src }}"
+                     style="height: 500px;">
+                <span>{{ product.name }}</span>
+                <span>{{ product.price }} ₽</span>
+                <a href="{% url 'basket:add' product.pk %}">
+                    Купить
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
