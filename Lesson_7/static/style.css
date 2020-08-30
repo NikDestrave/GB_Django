@@ -528,10 +528,18 @@ td.game-table-cell {
     margin: auto;
 }
 
+.product_name {
+    margin-left: 20px;
+}
+
 .product_record {
     display: flex;
     align-items: center;
     margin-top: 20px;
+}
+
+.product_record img {
+    width: 70px;
 }
 
 .not_active {
@@ -549,7 +557,22 @@ td.game-table-cell {
     width: 180px;
 }
 
-.link_update{
+.link_update {
     border: none;
-    margin: 15px 52px;
+    margin: 20px auto;
+    display: block;
+    background: #fff;
+}
+
+.summary {
+    margin-left: 10px;
+}
+
+.product_read{
+    display: flex;
+    justify-content: space-around;
+}
+
+.product_read img{
+    width: 200px;
 }
